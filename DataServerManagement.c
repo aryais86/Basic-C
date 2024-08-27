@@ -41,8 +41,18 @@ void inputDataServer(struct Server server){
 	menu();
 }
 
-void inputDataPerson(){
+void inputDataPerson(struct Person person){
 	printf("Masukkan Data Person!\n");
+	getchar();
+	printf("Masukkan ID KTP : ");
+	scanf("%d", &person.KTP);
+	getchar();
+	printf("Masukkan Nama : ");
+	scanf("%[^\n]", person.nama);
+	getchar();
+	
+	printf("ID KTP : %d\n", person.KTP);
+	printf("Nama : %s\n", person.nama);
 	printf("\n\n");
 	menu();
 }
@@ -60,12 +70,14 @@ void reportAksesServer(){
 
 void switchMenu(int opsi){
 	struct Server server;
+	struct Person person;
+	
 	switch(opsi){
 		case 1:
 			inputDataServer(server);
 			break;
 		case 2:
-			inputDataPerson();
+			inputDataPerson(person);
 			break;
 		case 3:
 			izinMasukServer();
