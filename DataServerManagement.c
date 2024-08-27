@@ -1,15 +1,48 @@
 #include<stdio.h>
 
+void menu();
+
+void inputDataServer(){
+	printf("Masukkan Data Server!\n");
+	printf("\n\n");
+	menu();
+}
+
+void inputDataPerson(){
+	printf("Masukkan Data Person!\n");
+	printf("\n\n");
+	menu();
+}
+
+void izinMasukServer(){
+	printf("Masukkan Izin Masuk ke Dalam Server!\n");
+	printf("\n\n");
+	menu();
+}
+
+void reportAksesServer(){
+	printf("Report Akses Server\n");
+	printf("\n\n");
+	menu();
+}
+
 void switchMenu(int opsi){
 	switch(opsi){
 		case 1:
+			inputDataServer();
 			break;
 		case 2:
+			inputDataPerson();
 			break;
 		case 3:
+			izinMasukServer();
 			break;
 		case 4:
+			reportAksesServer();
 			break;
+		case 5:
+			printf("Terima Kasih\n");
+			return;
 	}	
 }
 
@@ -22,7 +55,7 @@ void menu(){
 		printf("2.Masukkan Data Person\n");
 		printf("3.Masukkan Izin Masuk ke Dalam Server\n");
 		printf("4.Report Akses Server\n");
-		printf("Exit\n");
+		printf("5.Exit\n");
 		printf(">> ");
 		scanf("%d", &opsi);
 		
