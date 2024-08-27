@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <string.h>
 
 struct Server{
 	char ip[100];
@@ -23,8 +24,19 @@ struct Report{
 
 void menu();
 
-void inputDataServer(){
+void inputDataServer(struct Server server){
 	printf("Masukkan Data Server!\n");
+	getchar();
+	printf("Masukkan IP Address : ");
+	scanf("%[^\n]", server.ip);
+	getchar();
+	printf("Masukkan Nama DNS Server : ");
+	scanf("%[^\n]", server.dns);
+	getchar();
+	
+	printf("IP : %s\n", server.ip);
+	printf("DNS : %s\n", server.dns);
+	
 	printf("\n\n");
 	menu();
 }
@@ -47,9 +59,10 @@ void reportAksesServer(){
 }
 
 void switchMenu(int opsi){
+	struct Server server;
 	switch(opsi){
 		case 1:
-			inputDataServer();
+			inputDataServer(server);
 			break;
 		case 2:
 			inputDataPerson();
