@@ -1,5 +1,26 @@
 #include<stdio.h>
 
+struct Server{
+	char ip[100];
+	char dns[100];
+};
+
+struct Person{
+	int KTP;
+	char nama[100];
+};
+
+struct Access{
+	char name[100];
+	char ip[100];
+	
+};
+
+struct Report{
+	char tanggalMasuk[12];
+	char tanggalKeluar[12];
+};
+
 void menu();
 
 void inputDataServer(){
@@ -15,7 +36,6 @@ void inputDataPerson(){
 }
 
 void izinMasukServer(){
-	printf("Masukkan Izin Masuk ke Dalam Server!\n");
 	printf("\n\n");
 	menu();
 }
@@ -47,7 +67,7 @@ void switchMenu(int opsi){
 }
 
 void menu(){
-	int opsi=0;
+	int opsi= 0;
 	
 	do{
 		printf("Silahkan Pilih Menu...\n");
@@ -67,7 +87,6 @@ void menu(){
 			switchMenu(opsi);
 		}
 	}while(opsi<1 ||opsi>5);
-	
 }
 
 int main(){
