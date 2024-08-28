@@ -24,6 +24,23 @@ struct Report{
 
 void menu();
 
+void writeInputServer(struct Server server){
+	FILE *file;
+	file = fopen("server_db.csv","a");
+	int i;
+	
+	if(file == NULL){
+		printf("File does not exist.\n");
+		menu();
+	}
+	
+	fprintf(file,"%-20s%-20s\n", server.ip, server.dns);
+	fclose(file);
+	
+	printf("Server Successfuly added\n");
+}
+
+
 void inputDataServer(struct Server server){
 	printf("Masukkan Data Server!\n");
 	getchar();
@@ -34,8 +51,10 @@ void inputDataServer(struct Server server){
 	scanf("%[^\n]", server.dns);
 	getchar();
 	
-	printf("IP : %s\n", server.ip);
-	printf("DNS : %s\n", server.dns);
+//	printf("IP : %s\n", server.ip);
+//	printf("DNS : %s\n", server.dns);
+	
+	writeInputServer(server);
 	
 	printf("\n\n");
 	menu();
