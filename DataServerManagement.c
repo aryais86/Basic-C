@@ -36,7 +36,23 @@ void writeInputServer(struct Server server){
 	
 	fprintf(file,"%-20s%-20s\n", server.ip, server.dns);
 	fclose(file);
+	 
+	printf("Server Successfuly added\n");
+}
+
+void writeInputPerson(struct Person person){
+	FILE *file;
+	file = fopen("person_db.csv","a");
+	int i;
 	
+	if(file == NULL){
+		printf("File does not exist.\n");
+		menu();
+	}
+	
+	fprintf(file,"%-20d%-20s\n", person.KTP, person.nama);
+	fclose(file);
+	 
 	printf("Server Successfuly added\n");
 }
 
@@ -72,6 +88,9 @@ void inputDataPerson(struct Person person){
 	
 	printf("ID KTP : %d\n", person.KTP);
 	printf("Nama : %s\n", person.nama);
+	
+	writeInputPerson(person);
+	
 	printf("\n\n");
 	menu();
 }
