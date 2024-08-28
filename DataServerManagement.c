@@ -11,13 +11,9 @@ struct Person{
 	char nama[100];
 };
 
-struct Access{
-	char name[100];
-	char ip[100];
-	
-};
-
 struct Report{
+	char nama[100];
+	char ip[100];
 	char tanggalMasuk[12];
 	char tanggalKeluar[12];
 };
@@ -57,6 +53,26 @@ void writeInputPerson(struct Person person){
 }
 
 
+
+void writeInputPerson(struct Report report){
+	FILE *file;
+	file = fopen("person_db.csv","a");
+	int i;
+	
+	if(file == NULL){
+		printf("File does not exist.\n");
+		menu();
+	}
+	char KTP = "0";
+	char DNS = "0";
+	
+	fprintf(file,"%-20d%-20s%-20s%-20s%-20\n", KTP, report.nama, report.ip, DNS, report.tanggalMasuk,report.tanggalKeluar);
+	fclose(file);
+	 
+	printf("Server Successfuly added\n");
+}
+
+
 void inputDataServer(struct Server server){
 	printf("Masukkan Data Server!\n");
 	getchar();
@@ -86,8 +102,8 @@ void inputDataPerson(struct Person person){
 	scanf("%[^\n]", person.nama);
 	getchar();
 	
-	printf("ID KTP : %d\n", person.KTP);
-	printf("Nama : %s\n", person.nama);
+//	printf("ID KTP : %d\n", person.KTP);
+//	printf("Nama : %s\n", person.nama);
 	
 	writeInputPerson(person);
 	
@@ -95,8 +111,27 @@ void inputDataPerson(struct Person person){
 	menu();
 }
 
-void izinMasukServer(){
+void izinMasukServer(struct Report report){
 	printf("Masukkan Izin Masuk ke Dalam Server\n");
+	getchar();
+	printf("Masukkan Nama : ");
+	scanf("%[^\n]", report.nama);
+	getchar();
+	printf("Masukkan IP Address : ");
+	scanf("%[^\n]", report.ip);
+	getchar();
+	printf("Masukkan Tanggal Masuk(yyyyMMddhhmm) : ");
+	scanf("%[^\n]", report.tanggalMasuk);
+	getchar();
+	printf("Masukkan Tanggal Keluar(yyyyMMddhhmm) : ");
+	scanf("%[^\n]", report.tanggalKeluar);
+	getchar();
+	
+//	printf("Nama: %s\n", report.nama);
+//	printf("IP: %s\n", report.ip);
+//	printf("Tanggal Mausk: %s\n", report.tanggalMasuk);
+//	printf("Tanggal Keluar: %s\n", report.tanggalKeluar);
+	
 	printf("\n\n");
 	menu();
 }
@@ -110,6 +145,7 @@ void reportAksesServer(){
 void switchMenu(int opsi){
 	struct Server server;
 	struct Person person;
+	struct Report report;
 	
 	switch(opsi){
 		case 1:
@@ -119,7 +155,7 @@ void switchMenu(int opsi){
 			inputDataPerson(person);
 			break;
 		case 3:
-			izinMasukServer();
+			izinMasukServer(report);
 			break;
 		case 4:
 			reportAksesServer();
