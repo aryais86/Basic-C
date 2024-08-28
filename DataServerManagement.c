@@ -58,6 +58,7 @@ void inputDataPerson(struct Person person){
 }
 
 void izinMasukServer(){
+	printf("Masukkan Izin Masuk ke Dalam Server\n");
 	printf("\n\n");
 	menu();
 }
