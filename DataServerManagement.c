@@ -14,8 +14,8 @@ struct Person{
 struct Report{
 	char nama[100];
 	char ip[100];
-	char tanggalMasuk[12];
-	char tanggalKeluar[12];
+	long long tanggalMasuk;
+	long long tanggalKeluar;
 };
 
 void menu();
@@ -52,25 +52,69 @@ void writeInputPerson(struct Person person){
 	printf("Server Successfuly added\n");
 }
 
-
-
-void writeInputPerson(struct Report report){
+int getKTP(struct Report report){
 	FILE *file;
-	file = fopen("person_db.csv","a");
-	int i;
+	file = fopen("person_db.csv","r");
 	
 	if(file == NULL){
-		printf("File does not exist.\n");
-		menu();
+		printf("File does not Exist!\n");
+		return 1;
 	}
-	char KTP = "0";
-	char DNS = "0";
 	
-	fprintf(file,"%-20d%-20s%-20s%-20s%-20\n", KTP, report.nama, report.ip, DNS, report.tanggalMasuk,report.tanggalKeluar);
-	fclose(file);
-	 
-	printf("Server Successfuly added\n");
+	struct Person person;
+    while (fscanf(file, "%d %[^\n]", &person.KTP, person.nama) != EOF) {
+        if (strcmp(report.nama, person.nama) == 0) {
+            fclose(file); 
+            return person.KTP;
+        }
+    }
+
+    fclose(file);
+    return 1;
 }
+
+//char* getDNS(struct Report report){
+//	FILE *file;
+//	file = fopen("server_db.csv","r");
+//	
+//	if(file == NULL){
+//		printf("File does not Exist!\n");
+//		return NULL;
+//	}
+//	
+//	struct Server server;
+//	char line[256];
+//    while (fgets(line, sizeof(line), file)) {
+//        // Parse each line to extract IP and DNS values
+//        sscanf(line, "%[^,],%s", server.ip, server.dns);
+//        if (strcmp(report.ip, server.ip) == 0) {
+//            fclose(file); 
+//            return strdup(server.dns);
+//        }
+//    }
+//
+//    fclose(file);
+//    return NULL;
+//}
+	
+
+//void writeInputPerson(struct Report report){
+//	FILE *file;
+//	file = fopen("person_db.csv","a");
+//	int i;
+//	
+//	if(file == NULL){
+//		printf("File does not exist.\n");
+//		menu();
+//	}
+//	char KTP = "0";
+//	char DNS = "0";
+//	
+//	fprintf(file,"%-20d%-20s%-20s%-20s%-20\n", KTP, report.nama, report.ip, DNS, report.tanggalMasuk,report.tanggalKeluar);
+//	fclose(file);
+//	 
+//	printf("Server Successfuly added\n");
+//}
 
 
 void inputDataServer(struct Server server){
@@ -112,6 +156,7 @@ void inputDataPerson(struct Person person){
 }
 
 void izinMasukServer(struct Report report){
+	struct Person person;
 	printf("Masukkan Izin Masuk ke Dalam Server\n");
 	getchar();
 	printf("Masukkan Nama : ");
@@ -121,16 +166,20 @@ void izinMasukServer(struct Report report){
 	scanf("%[^\n]", report.ip);
 	getchar();
 	printf("Masukkan Tanggal Masuk(yyyyMMddhhmm) : ");
-	scanf("%[^\n]", report.tanggalMasuk);
-	getchar();
+	scanf("%lld", &report.tanggalMasuk);
 	printf("Masukkan Tanggal Keluar(yyyyMMddhhmm) : ");
-	scanf("%[^\n]", report.tanggalKeluar);
-	getchar();
+	scanf("%lld", &report.tanggalKeluar);
 	
-//	printf("Nama: %s\n", report.nama);
-//	printf("IP: %s\n", report.ip);
-//	printf("Tanggal Mausk: %s\n", report.tanggalMasuk);
-//	printf("Tanggal Keluar: %s\n", report.tanggalKeluar);
+	printf("Nama: %s\n", report.nama);
+	printf("IP: %s\n", report.ip);
+	printf("Tanggal Masuk: %lld\n", report.tanggalMasuk);
+	printf("Tanggal Keluar: %lld\n", report.tanggalKeluar);
+	
+//	int a = getKTP(report);
+//	char* b =getDNS(report);
+//	
+//	printf("KTP %s :%d\n", report.nama, a);
+//	printf("DNS %s :%s\n", report.ip, b);
 	
 	printf("\n\n");
 	menu();
@@ -175,7 +224,7 @@ void menu(){
 		printf("2.Masukkan Data Person\n");
 		printf("3.Masukkan Izin Masuk ke Dalam Server\n");
 		printf("4.Report Akses Server\n");
-		printf("5.Exit\n");
+		printf("5.Keluar\n");
 		printf(">> ");
 		scanf("%d", &opsi);
 		
