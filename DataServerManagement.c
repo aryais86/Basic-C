@@ -175,10 +175,10 @@ void izinMasukServer(struct Report report){
 	printf("Tanggal Masuk: %lld\n", report.tanggalMasuk);
 	printf("Tanggal Keluar: %lld\n", report.tanggalKeluar);
 	
-//	int a = getKTP(report);
+	int a = getKTP(report);
 //	char* b =getDNS(report);
 //	
-//	printf("KTP %s :%d\n", report.nama, a);
+	printf("KTP %s :%d\n", report.nama, a);
 //	printf("DNS %s :%s\n", report.ip, b);
 	
 	printf("\n\n");
