@@ -16,12 +16,12 @@ int isPrimeChecker(int n, int i) {
 }
 
 int isPrime(int x) {
+	
     return isPrimeChecker(x, 2);
 }
 
 int main() {
 	int t=0,i;
-	int x[i];
 	
 	
 	do{
@@ -31,6 +31,9 @@ int main() {
 			printf("Test Case is invalid!\n");
 		}
 	}while(t<1 || t>100);
+	
+	
+	int x[t];
 	
 	for(i=0;i<t;i++){
 		printf("Enter number %d: ", i+1);
