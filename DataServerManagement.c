@@ -20,6 +20,28 @@ struct Report{
 
 void menu();
 
+void loadPerson(){
+	struct Person person[1000];
+	
+	FILE *file;
+	file = fopen("person_db.csv","a");
+	
+	if(file == NULL){
+		printf("File does not exist.\n");
+		menu();
+	}
+	
+	char text[256];
+	int person_count;
+	
+	while(fgets(text, sizeof(text), file)){
+		sscanf(text,"%d,%99[^\n]", &person[person_count].KTP, person[person_count].nama);
+		person_count++;
+	}
+	
+	fclose(file);
+}
+
 void writeInputServer(struct Server server){
 	FILE *file;
 	file = fopen("server_db.csv","a");
@@ -39,17 +61,16 @@ void writeInputServer(struct Server server){
 void writeInputPerson(struct Person person){
 	FILE *file;
 	file = fopen("person_db.csv","a");
-	int i;
 	
 	if(file == NULL){
 		printf("File does not exist.\n");
 		menu();
 	}
 	
-	fprintf(file,"%-20d%-20s\n", person.KTP, person.nama);
+	fprintf(file,"%s,%d\n", person.nama, person.KTP);
 	fclose(file);
 	 
-	printf("Server Successfuly added\n");
+	printf("Person Successfuly added\n");
 }
 
 int getKTP(struct Report report){
@@ -58,45 +79,23 @@ int getKTP(struct Report report){
 	
 	if(file == NULL){
 		printf("File does not Exist!\n");
-		return 1;
+		menu();
 	}
 	
 	struct Person person;
-    while (fscanf(file, "%d %[^\n]", &person.KTP, person.nama) != EOF) {
+    while (fscanf(file, "%99[^\n],%d", person.nama, &person.KTP) == 2) {
         if (strcmp(report.nama, person.nama) == 0) {
             fclose(file); 
+            printf("KTP=%d\n", person.KTP);
             return person.KTP;
         }
     }
 
     fclose(file);
-    return 1;
+    menu();
 }
 
-//char* getDNS(struct Report report){
-//	FILE *file;
-//	file = fopen("server_db.csv","r");
-//	
-//	if(file == NULL){
-//		printf("File does not Exist!\n");
-//		return NULL;
-//	}
-//	
-//	struct Server server;
-//	char line[256];
-//    while (fgets(line, sizeof(line), file)) {
-//        // Parse each line to extract IP and DNS values
-//        sscanf(line, "%[^,],%s", server.ip, server.dns);
-//        if (strcmp(report.ip, server.ip) == 0) {
-//            fclose(file); 
-//            return strdup(server.dns);
-//        }
-//    }
-//
-//    fclose(file);
-//    return NULL;
-//}
-	
+//202408311800
 
 //void writeInputPerson(struct Report report){
 //	FILE *file;
@@ -139,12 +138,11 @@ void inputDataServer(struct Server server){
 void inputDataPerson(struct Person person){
 	printf("Masukkan Data Person!\n");
 	getchar();
-	printf("Masukkan ID KTP : ");
-	scanf("%d", &person.KTP);
-	getchar();
 	printf("Masukkan Nama : ");
 	scanf("%[^\n]", person.nama);
-	getchar();
+	getchar();	
+	printf("Masukkan ID KTP : ");
+	scanf("%lld", &person.KTP);
 	
 //	printf("ID KTP : %d\n", person.KTP);
 //	printf("Nama : %s\n", person.nama);
@@ -239,6 +237,7 @@ void menu(){
 }
 
 int main(){
+	loadPerson();
 	menu();
 	return 0;
 }
