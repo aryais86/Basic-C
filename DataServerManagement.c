@@ -60,7 +60,7 @@ void writeInputServer(struct Server server){
 		menu();
 	}
 	
-	fprintf(file,"%-20s%-20s\n", server.ip, server.dns);
+	fprintf(file,"%s,%s\n", server.ip, server.dns);
 	fclose(file);
 	 
 	printf("Server Successfuly added\n");
