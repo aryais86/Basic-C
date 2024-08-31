@@ -36,22 +36,6 @@ void writeInputServer(struct Server server){
 	printf("Server Successfuly added\n");
 }
 
-void writeInputPerson(struct Person person){
-	FILE *file;
-	file = fopen("person_db.csv","a");
-	
-	if(file == NULL){
-		printf("File does not exist.\n");
-		menu();
-	}
-	
-	fprintf(file,"%s,%d\n", person.nama, person.KTP);
-	fclose(file);
-	 
-	printf("Person Successfuly added\n");
-}
-
-
 void inputDataServer(struct Server server){
 	printf("Masukkan Data Server!\n");
 	getchar();
@@ -71,6 +55,21 @@ void inputDataServer(struct Server server){
 	menu();
 }
 
+void writeInputPerson(struct Person person){
+	FILE *file;
+	file = fopen("person_db.csv","a");
+	
+	if(file == NULL){
+		printf("File does not exist.\n");
+		menu();
+	}
+	
+	fprintf(file,"%s,%d\n", person.nama, person.KTP);
+	fclose(file);
+	 
+	printf("Person Successfuly added\n");
+}
+
 void inputDataPerson(struct Person person){
 	printf("Masukkan Data Person!\n");
 	getchar();
@@ -87,6 +86,21 @@ void inputDataPerson(struct Person person){
 	
 	printf("\n\n");
 	menu();
+}
+
+void writeInputPerson(struct Report report){
+	FILE *file;
+	file = fopen("person_db.csv","a");
+	
+	if(file == NULL){
+		printf("File does not exist.\n");
+		menu();
+	}
+	
+	fprintf(file,"%s,%d\n", person.nama, person.KTP);
+	fclose(file);
+	 
+	printf("Person Successfuly added\n");
 }
 
 void izinMasukServer(struct Report report){
