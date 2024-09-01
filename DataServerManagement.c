@@ -200,7 +200,35 @@ void izinMasukServer(struct Report report){
 
 //202408311800
 
-void reportAksesServer(){
+void sortReport(struct Report report, long long tanggalMasuk, long long tanggalKeluar){
+	FILE *file = fopen("access_db.csv", "r");
+	
+	if(file == NULL){
+		printf("File doesn't exist!\n");
+		menu();
+	}
+	printf("1\n");
+	
+	int ktp;
+	char dns;
+	
+	
+	printf("2\n");
+	
+	while(fscanf(file, "*%d;%[^;];%[^;];%*[^;];%lld;%lld\n", report.nama, report.ip, &report.tanggalMasuk, &report.tanggalKeluar)==4){
+		printf("IP addr: %s, User: %s, checkin: %lld, checkout:%lld\n", report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
+	}
+	
+//	while(fscanf(file, "%[^;];%[^;];%lld;%lld\n", report.nama, report.ip, &report.tanggalMasuk, &report.tanggalKeluar)==4){
+//		printf("IP addr: %s, User: %s, checkin: %lld, checkout:%lld\n", report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
+//	}
+	
+	printf("3\n");
+	
+	fclose(file);
+}
+
+void reportAksesServer(struct Report report){
 	long long tanggalMasuk, tanggalKeluar;
 	printf("Report Akses Server\n");
 	printf("Masukkan tanggal jam masuk server: ");
@@ -211,6 +239,8 @@ void reportAksesServer(){
 	printf("\n");
 	printf("Tanggal Masuk: %lld\n", tanggalMasuk);
 	printf("Tanggal Keluar: %lld\n", tanggalKeluar);
+	printf("\n\n");
+	sortReport(report, tanggalMasuk,tanggalKeluar);
 	printf("\n\n");
 	menu();
 }
@@ -231,7 +261,7 @@ void switchMenu(int opsi){
 			izinMasukServer(report);
 			break;
 		case 4:
-			reportAksesServer();
+			reportAksesServer(report);
 			break;
 		case 5:
 			printf("Terima Kasih\n");
