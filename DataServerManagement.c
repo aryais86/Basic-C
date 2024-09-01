@@ -30,7 +30,7 @@ void writeInputServer(struct Server server){
 		menu();
 	}
 	
-	fprintf(file,"%s,%s\n", server.ip, server.dns);
+	fprintf(file,"%s;%s\n", server.ip, server.dns);
 	fclose(file);
 	 
 	printf("Server Successfuly added\n");
@@ -64,7 +64,7 @@ void writeInputPerson(struct Person person){
 		menu();
 	}
 	
-	fprintf(file,"%s,%d\n", person.nama, person.KTP);
+	fprintf(file,"%s;%d\n", person.nama, person.KTP);
 	fclose(file);
 	 
 	printf("Person Successfuly added\n");
@@ -101,7 +101,7 @@ int getKTP(struct Report report){
     int found=0;
     printf("\n\n");
     
-    while (fscanf(file, "%[^,],%d\n", person.nama, &person.KTP) == 2) {
+    while (fscanf(file, "%[^;];%d\n", person.nama, &person.KTP) == 2) {
 //    	printf("Nama: %s\n", person.nama);
 //        printf("KTP: %d\n", person.KTP);
         if (strcmp(person.nama, report.nama) == 0) {
@@ -132,7 +132,7 @@ char* getDNS(struct Report report){
 	struct Server server;
 	int found=0;
     
-    while (fscanf(file, "%[^,],%[^\n]\n", server.ip, server.dns) == 2) {
+    while (fscanf(file, "%[^;];%[^\n]\n", server.ip, server.dns) == 2) {
 //    	printf("IP: %s\n", server.ip);
 //    	printf("DNS: %s\n", server.dns);
         if (strcmp(report.ip, server.ip) == 0) {
@@ -191,12 +191,6 @@ void izinMasukServer(struct Report report){
 	printf("IP: %s\n", report.ip);
 	printf("Tanggal Masuk: %lld\n", report.tanggalMasuk);
 	printf("Tanggal Keluar: %lld\n", report.tanggalKeluar);
-	
-	int KTP = getKTP(report);
-	char* DNS = getDNS(report);
-	
-	printf("KTP %s :%d\n", report.nama, KTP);
-	printf("DNS %s :%s\n", report.ip, DNS);
 	
 	writeReport(report);
 	
