@@ -219,9 +219,8 @@ void sortReport(long long tanggalMasuk, long long tanggalKeluar){
 		
 	printf("\ncount : %d\n\n", count);
 	
-//	selectionSortReport(report, count);
+	int i,j;
 	
-	int i;
 	for(i=0;i<count;i++){
 		if(report[i].tanggalMasuk>=tanggalMasuk && report[i].tanggalKeluar<=tanggalKeluar){
 			printf("IP addr: %s, User: %s, checkin: %lld, checkout: %lld\n", report[i].ip, report[i].nama, report[i].tanggalMasuk, report[i].tanggalKeluar);
