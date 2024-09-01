@@ -136,7 +136,6 @@ char* getDNS(struct Report report){
 //    	printf("IP: %s\n", server.ip);
 //    	printf("DNS: %s\n", server.dns);
         if (strcmp(report.ip, server.ip) == 0) {
-        	strcpy(dns, server.dns);
             found = 1;
             break;
         }
@@ -168,10 +167,10 @@ void writeReport(struct Report report){
 	printf("KTP %s :%d\n", report.nama, KTP);
 	printf("DNS %s :%s\n", report.ip, DNS);
 	
-	fprintf(file,"%s,%d\n", person.nama, person.KTP);
+	fprintf(file,"%d;%s;%s;%s;%lld;%lld\n", KTP, report.nama,report.ip, DNS, report.tanggalMasuk,report.tanggalKeluar);
 	fclose(file);
 	 
-	printf("Person Successfuly added\n");
+	printf("Access Successfuly added\n");
 }
 
 void izinMasukServer(struct Report report){
@@ -198,6 +197,8 @@ void izinMasukServer(struct Report report){
 	
 	printf("KTP %s :%d\n", report.nama, KTP);
 	printf("DNS %s :%s\n", report.ip, DNS);
+	
+	writeReport(report);
 	
 	printf("\n\n");
 	menu();
