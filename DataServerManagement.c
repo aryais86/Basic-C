@@ -249,7 +249,7 @@ void menu(){
 		printf("3.Masukkan Izin Masuk ke Dalam Server\n");
 		printf("4.Report Akses Server\n");
 		printf("5.Keluar\n");
-		printf(">> ");
+		printf("Masukkan pilihan: ");
 		scanf("%d", &opsi);
 		
 		if(opsi<1 ||opsi>5){
