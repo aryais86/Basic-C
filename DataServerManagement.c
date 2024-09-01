@@ -201,7 +201,16 @@ void izinMasukServer(struct Report report){
 //202408311800
 
 void reportAksesServer(){
+	long long tanggalMasuk, tanggalKeluar;
 	printf("Report Akses Server\n");
+	printf("Masukkan tanggal jam masuk server: ");
+	scanf("%lld", &tanggalMasuk);
+	printf("Masukkan tanggal jam masuk server: ");
+	scanf("%lld", &tanggalKeluar);
+	
+	printf("\n");
+	printf("Tanggal Masuk: %lld\n", tanggalMasuk);
+	printf("Tanggal Keluar: %lld\n", tanggalKeluar);
 	printf("\n\n");
 	menu();
 }
