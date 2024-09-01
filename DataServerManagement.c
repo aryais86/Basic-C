@@ -193,43 +193,45 @@ void izinMasukServer(struct Report report){
 	printf("Tanggal Keluar: %lld\n", report.tanggalKeluar);
 	
 	writeReport(report);
-	
+
 	printf("\n\n");
 	menu();
 }
 
 //202408311800
 
-void sortReport(struct Report report, long long tanggalMasuk, long long tanggalKeluar){
+void sortReport(long long tanggalMasuk, long long tanggalKeluar){
 	FILE *file = fopen("access_db.csv", "r");
-	
+	int count = 0;
+	struct Report report[count];
+		
 	if(file == NULL){
 		printf("File doesn't exist!\n");
 		menu();
 	}
-	printf("1\n");
 	
-	int ktp;
-	char dns;
-	
-	
-	printf("2\n");
-	
-	while(fscanf(file, "%*d;%[^;];%[^;];%*[^;];%lld;%lld\n", 
-             report.nama, report.ip, 
-             &report.tanggalMasuk, &report.tanggalKeluar) == 4) {
-    printf("IP addr: %s, User: %s, check-in: %lld, check-out: %lld\n", 
-           report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
-}
-	
-//	while(fscanf(file, "%[^;];%[^;];%lld;%lld\n", report.nama, report.ip, &report.tanggalMasuk, &report.tanggalKeluar)==4){
-//		printf("IP addr: %s, User: %s, checkin: %lld, checkout:%lld\n", report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
-//	}
-	
-	printf("3\n");
+	while(fscanf(file, "%*d;%[^;];%[^;];%*[^;];%lld;%lld\n",report[count].nama, report[count].ip,&report[count].tanggalMasuk, &report[count].tanggalKeluar) == 4) {
+		printf("IP addr: %s, User: %s, checkin: %lld, checkout: %lld\n", report[count].ip, report[count].nama, report[count].tanggalMasuk, report[count].tanggalKeluar);
+    	count++;
+	}
 	
 	fclose(file);
+		
+	printf("\ncount : %d\n\n", count);
+	
+//	selectionSortReport(report, count);
+	
+	int i;
+	for(i=0;i<count;i++){
+		if(report[i].tanggalMasuk>=tanggalMasuk && report[i].tanggalKeluar<=tanggalKeluar){
+			printf("IP addr: %s, User: %s, checkin: %lld, checkout: %lld\n", report[i].ip, report[i].nama, report[i].tanggalMasuk, report[i].tanggalKeluar);
+		}
+	}
 }
+
+//202401010001
+//202406302359
+//202412312359
 
 void reportAksesServer(struct Report report){
 	long long tanggalMasuk, tanggalKeluar;
@@ -243,7 +245,9 @@ void reportAksesServer(struct Report report){
 	printf("Tanggal Masuk: %lld\n", tanggalMasuk);
 	printf("Tanggal Keluar: %lld\n", tanggalKeluar);
 	printf("\n\n");
-	sortReport(report, tanggalMasuk,tanggalKeluar);
+	
+	sortReport(tanggalMasuk,tanggalKeluar);
+	
 	printf("\n\n");
 	menu();
 }
