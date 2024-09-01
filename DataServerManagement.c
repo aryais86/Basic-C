@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include <string.h>
+#include<stdlib.h>
 
 struct Server{
 	char ip[100];
@@ -201,32 +202,54 @@ void izinMasukServer(struct Report report){
 //202408311800
 
 void sortReport(long long tanggalMasuk, long long tanggalKeluar){
-	FILE *file = fopen("access_db.csv", "r");
-	int count = 0;
-	struct Report report[count];
-		
-	if(file == NULL){
-		printf("File doesn't exist!\n");
-		menu();
-	}
-	
-	while(fscanf(file, "%*d;%[^;];%[^;];%*[^;];%lld;%lld\n",report[count].nama, report[count].ip,&report[count].tanggalMasuk, &report[count].tanggalKeluar) == 4) {
-		printf("IP addr: %s, User: %s, checkin: %lld, checkout: %lld\n", report[count].ip, report[count].nama, report[count].tanggalMasuk, report[count].tanggalKeluar);
-    	count++;
-	}
-	
-	fclose(file);
-		
-	printf("\ncount : %d\n\n", count);
-	
-	int i,j;
-	
-	for(i=0;i<count;i++){
-		if(report[i].tanggalMasuk>=tanggalMasuk && report[i].tanggalKeluar<=tanggalKeluar){
-			printf("IP addr: %s, User: %s, checkin: %lld, checkout: %lld\n", report[i].ip, report[i].nama, report[i].tanggalMasuk, report[i].tanggalKeluar);
-		}
-	}
+    FILE *file = fopen("access_db.csv", "r");
+    if(file == NULL){
+        printf("File doesn't exist!\n");
+        return;
+    }
+    
+//     Dynamically allocate memory for reports
+    struct Report *report = (struct Report *)malloc(1000 * sizeof(struct Report)); // Without this, the sorting algorithm ddoes not work
+    																			  // this is to increase the memory size of report
+    
+    int count = 0;
+    
+    while(fscanf(file, "%*d;%[^;];%[^;];%*[^;];%lld;%lld\n", 
+                  report[count].nama, report[count].ip, 
+                  &report[count].tanggalMasuk, &report[count].tanggalKeluar) == 4) {
+        count++;
+    }
+    
+    fclose(file);
+    
+    // Bubble Sort
+    int i, j;
+    for(i = 0; i < count - 1; i++) {
+        for(j = 0; j < count - i - 1; j++) {
+            if(report[j].tanggalMasuk > report[j+1].tanggalMasuk) {
+                struct Report temp = report[j];
+                report[j] = report[j+1];
+                report[j+1] = temp;
+            }
+        }
+    }
+    
+    int found = 0;
+    for(i = 0; i < count; i++) {
+    	// Filter the input tanggalMasuk and tanggalKeluar
+        if(report[i].tanggalMasuk >= tanggalMasuk && report[i].tanggalKeluar <= tanggalKeluar) {
+            printf("IP addr: %s, User: %s, checkin: %lld, checkout: %lld\n", 
+                   report[i].ip, report[i].nama, report[i].tanggalMasuk, report[i].tanggalKeluar);
+            found = 1;
+        }
+    }
+    if (found==0) {
+        printf("No records match the specified date range.\n");
+    }
+    
+    free(report);
 }
+
 
 //202401010001
 //202406302359
