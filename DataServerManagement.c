@@ -215,9 +215,12 @@ void sortReport(struct Report report, long long tanggalMasuk, long long tanggalK
 	
 	printf("2\n");
 	
-	while(fscanf(file, "*%d;%[^;];%[^;];%*[^;];%lld;%lld\n", report.nama, report.ip, &report.tanggalMasuk, &report.tanggalKeluar)==4){
-		printf("IP addr: %s, User: %s, checkin: %lld, checkout:%lld\n", report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
-	}
+	while(fscanf(file, "%*d;%[^;];%[^;];%*[^;];%lld;%lld\n", 
+             report.nama, report.ip, 
+             &report.tanggalMasuk, &report.tanggalKeluar) == 4) {
+    printf("IP addr: %s, User: %s, check-in: %lld, check-out: %lld\n", 
+           report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
+}
 	
 //	while(fscanf(file, "%[^;];%[^;];%lld;%lld\n", report.nama, report.ip, &report.tanggalMasuk, &report.tanggalKeluar)==4){
 //		printf("IP addr: %s, User: %s, checkin: %lld, checkout:%lld\n", report.ip, report.nama, report.tanggalMasuk, report.tanggalKeluar);
