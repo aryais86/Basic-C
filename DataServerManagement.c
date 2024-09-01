@@ -79,13 +79,51 @@ void inputDataPerson(struct Person person){
 	printf("Masukkan ID KTP : ");
 	scanf("%d", &person.KTP);
 	
-//	printf("ID KTP : %d\n", person.KTP);
-//	printf("Nama : %s\n", person.nama);
+	printf("ID KTP : %d\n", person.KTP);
+	printf("Nama : %s\n", person.nama);
 	
 	writeInputPerson(person);
 	
 	printf("\n\n");
 	menu();
+}
+
+int getKTP(struct Report report){
+	FILE *file;
+	file = fopen("person_db.csv","r");
+	
+	if(file == NULL){
+		printf("File does not Exist!\n");
+		return -1;
+	}
+	
+	struct Person person;
+	
+//	char buffer[150];
+//    fgets(buffer, sizeof(buffer), file);
+    
+    char text[150];
+    int found=0;
+    printf("\n\n");
+    
+    while (fscanf(file, "%[^,],%d\n", person.nama, &person.KTP) == 2) {
+//    	printf("Nama: %s\n", person.nama);
+//        printf("KTP: %d\n", person.KTP);
+        if (strcmp(person.nama, report.nama) == 0) {
+            found=1;
+            break;
+        }
+    }
+    
+    fclose(file);
+    
+    if(found){
+    	return person.KTP;
+	}else{
+		return -1;
+	}
+
+
 }
 
 void izinMasukServer(struct Report report){
@@ -109,64 +147,43 @@ void izinMasukServer(struct Report report){
 	printf("Tanggal Keluar: %lld\n", report.tanggalKeluar);
 	
 	int KTP = getKTP(report);
-	char* DNS =getDNS(report);
+//	char* DNS = getDNS(report);
 //	
 	printf("KTP %s :%d\n", report.nama, KTP);
-	printf("DNS %s :%s\n", report.ip, DNS);
+//	printf("DNS %s :%s\n", report.ip, DNS);
 	
 	printf("\n\n");
 	menu();
 }
 
-int getKTP(struct Report report){
-	FILE *file;
-	file = fopen("person_db.csv","r");
-	
-	if(file == NULL){
-		printf("File does not Exist!\n");
-		return -1;
-	}
-	
-	struct Person person;
-	
-	char buffer[150];
-    fgets(buffer, sizeof(buffer), file);
-    
-    while (fscanf(file, "%[^,],%d", person.nama, &person.KTP) == 2) {
-        if (strcmp(report.nama, person.nama) == 0) {
-            fclose(file); 
-            return person.KTP;
-        }
-    }
 
-    fclose(file);
-    return -1;
-}
 
-char* getDNS(struct Report report){
-	FILE *file;
-	file = fopen("server_db.csv","r");
-	
-	if(file == NULL){
-		printf("File does not Exist!\n");
-		return NULL;
-	}
-	
-	struct Server server;
-	
-	char buffer[150];
-    fgets(buffer, sizeof(buffer), file);
-    
-    while (fscanf(file, "%[^,],%[^\n]", server.ip, server.dns) == 2) {
-        if (strcmp(report.ip, server.ip) == 0) {
-            fclose(file); 
-            return server.dns;
-        }
-    }
-
-    fclose(file);
-    return NULL;
-}
+//char* getDNS(struct Report report){
+//	char dns[100];
+//	FILE *file;
+//	file = fopen("server_db.csv","r");
+//	
+//	if(file == NULL){
+//		printf("File does not Exist!\n");
+//		return NULL;
+//	}
+//	
+//	struct Server server;
+//	
+//	char buffer[150];
+//    fgets(buffer, sizeof(buffer), file);
+//    
+//    while (fscanf(file, "%[^,],%[^\n]", server.ip, server.dns) == 2) {
+//        if (strcmp(report.ip, server.ip) == 0) {
+//        	strcpy(dns, server.dns);
+//            fclose(file); 
+//            return dns;
+//        }
+//    }
+//
+//    fclose(file);
+//    return NULL;
+//}
 //202408311800
 
 void reportAksesServer(){
