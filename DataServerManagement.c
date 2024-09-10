@@ -21,6 +21,7 @@ struct Report{
 
 void menu();
 
+// memasukkan input opsi 1 kedalam file
 void writeInputServer(struct Server server){
 	FILE *file;
 	file = fopen("server_db.csv","a");
@@ -34,9 +35,10 @@ void writeInputServer(struct Server server){
 	fprintf(file,"%s;%s\n", server.ip, server.dns);
 	fclose(file);
 	 
-	printf("Server Successfuly added\n");
+	printf("Sukses menambahkan Data Server\n");
 }
 
+//opsi 1
 void inputDataServer(struct Server server){
 	printf("Masukkan Data Server!\n");
 	getchar();
@@ -56,6 +58,7 @@ void inputDataServer(struct Server server){
 	menu();
 }
 
+// memasukkan input opsi 2 kedalam file
 void writeInputPerson(struct Person person){
 	FILE *file;
 	file = fopen("person_db.csv","a");
@@ -68,9 +71,10 @@ void writeInputPerson(struct Person person){
 	fprintf(file,"%s;%d\n", person.nama, person.KTP);
 	fclose(file);
 	 
-	printf("Person Successfuly added\n");
+	printf("Sukses menambahkan Data Orang\n");
 }
 
+// opsi 2
 void inputDataPerson(struct Person person){
 	printf("Masukkan Data Person!\n");
 	getchar();
@@ -153,6 +157,7 @@ char* getDNS(struct Report report){
     return NULL;
 }
 
+// memasukkan input opsi 3 ke file
 void writeReport(struct Report report){
 	FILE *file;
 	file = fopen("access_db.csv","a");
@@ -171,9 +176,10 @@ void writeReport(struct Report report){
 	fprintf(file,"%d;%s;%s;%s;%lld;%lld\n", KTP, report.nama,report.ip, DNS, report.tanggalMasuk,report.tanggalKeluar);
 	fclose(file);
 	 
-	printf("Access Successfuly added\n");
+	printf("Sukses menambah Data Akses\n");
 }
 
+//opsi 3
 void izinMasukServer(struct Report report){
 	printf("Masukkan Izin Masuk ke Dalam Server\n");
 	getchar();
@@ -199,8 +205,7 @@ void izinMasukServer(struct Report report){
 	menu();
 }
 
-//202408311800
-
+// sorting report dan filter tanggalMasuk dan tanggalKeluar
 void sortReport(long long tanggalMasuk, long long tanggalKeluar){
     FILE *file = fopen("access_db.csv", "r");
     if(file == NULL){
@@ -244,17 +249,13 @@ void sortReport(long long tanggalMasuk, long long tanggalKeluar){
         }
     }
     if (found==0) {
-        printf("No records match the specified date range.\n");
+        printf("Tidak ada data didalam jangka tanggal yang diberikan.\n");
     }
     
     free(report);
 }
 
-
-//202401010001
-//202406302359
-//202412312359
-
+// opsi 4
 void reportAksesServer(struct Report report){
 	long long tanggalMasuk, tanggalKeluar;
 	printf("Report Akses Server\n");
